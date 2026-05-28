@@ -15,14 +15,10 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from '@/components/ui/input-group';
-import {
-  headerCartSummary,
-  headerSearchPlaceholder,
-  headerSignInHref,
-  type HeaderCartSummary,
-} from '@/data/header';
+import { headerSearchPlaceholder, headerSignInHref } from '@/data/header';
 import { Link, useRouter } from '@/i18n/routing';
 import { headerSearchSchema } from '@/schemas/search.schema';
+import { getCartSummary, useCartStore } from '@/store/use-cart-store';
 import { cn } from '@/lib/utils';
 
 function HeaderShell({ children }: { children: React.ReactNode }) {
@@ -144,10 +140,12 @@ function SignInButton() {
   );
 }
 
-function CartButton({ cart }: { cart: HeaderCartSummary }) {
+function CartButton() {
+  const items = useCartStore((state) => state.items);
+  const cart = getCartSummary(items);
+
   return (
     <CartSheet
-      cart={cart}
       trigger={
         <Button
           type="button"
@@ -174,7 +172,7 @@ function HeaderActions() {
   return (
     <div className="flex shrink-0 items-center gap-3">
       <SignInButton />
-      <CartButton cart={headerCartSummary} />
+      <CartButton />
     </div>
   );
 }
