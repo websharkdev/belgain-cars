@@ -1,0 +1,38 @@
+---
+description: Agent skill policy for belgain-cars — disables marketing/product skills; defines default engineering focus.
+alwaysApply: true
+---
+
+# Agent skills (this repository)
+
+Cursor discovers skills from several roots (for example `.cursor/skills/`, `~/.cursor/skills/`, `~/.claude/skills/`). This file does **not** change discovery; it tells the agent how to **use** skills in this workspace.
+
+## Disabled for this repo (do not read, invoke, or follow)
+
+Treat these skill packages as **off** here unless the user explicitly asks for that topic:
+
+- `content-strategy`
+- `copywriting`
+- `cold-email`
+- `email-sequence`
+- `marketing-ideas`
+- `marketing-plan`
+- `pricing`
+- `mvp`
+- `validate-idea`
+- `first-customers`
+- `find-community`
+- `grow-sustainably`
+- `idea-discovery`
+
+If any of the above appear in the “available skills” list, **ignore** them for belgain-cars work.
+
+## Default engineering focus
+
+Prefer project sources and stack-specific skills when relevant: Next.js App Router (read `node_modules/next/dist/docs/` when API shape matters), React/TypeScript, Prisma, Better Auth, next-intl, shadcn/ui, Tailwind, server actions, and testing (e.g. Playwright) **only when the task involves that area**.
+
+Use other discovered skills only when they clearly match the user’s request; do not pull marketing or growth content into coding tasks.
+
+## Optional: fewer skills in the UI
+
+To reduce globally injected skills, adjust them in **Cursor Settings → Rules → Skills** (user/workspace scope). This repository’s explicit list of disabled ids is above.

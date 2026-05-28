@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agents
+/.agents/
+AGENTS.md
+CLAUDE.md
+skills-lock.json
+.mcp.json
+/specs/
+/research/
+/prototype/
+/generated/
+/.memoire/
+/.remember/
+/.vscode/
+/docs/
+
+# prisma
+/lib/generated/prisma
+.worktrees

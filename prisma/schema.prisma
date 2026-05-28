@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          String?   @default("buyer")
+  lastName      String
+  companyName   String?
+  phone         String?
+
+  sessions Session[]
+  accounts Account[]
+  rfqs     Rfq[]
+
+  @@unique([email])
+  @@map("User")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("Session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("Account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("Verification")
+}
+
+model Rfq {
+  id            Int       @id @default(autoincrement())
+  title         String
+  description   String
+  budget        Int
+  budgetVisible Boolean
+  deadline      DateTime
+  status        String
+  buyerId       String
+  storagePrefix String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  buyer        User             @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  lineItems    RfqLineItem[]
+  questions    RfqQuestion[]
+  requirements RfqRequirement[]
+  suppliers    RfqSupplier[]
+  attachments  RfqAttachment[]
+
+  @@index([buyerId])
+  @@map("Rfq")
+}
+
+model RfqLineItem {
+  id             String @id @default(uuid())
+  rfqId          Int
+  rfq            Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  item           String
+  specifications String
+  quantity       Int
+  price          Int
+  total          Int
+  sortOrder      Int
+
+  @@index([rfqId])
+  @@map("RfqLineItem")
+}
+
+model RfqQuestion {
+  id        String @id @default(uuid())
+  rfqId     Int
+  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  value     String
+  sortOrder Int
+
+  @@index([rfqId])
+  @@map("RfqQuestion")
+}
+
+model RfqRequirement {
+  id        String @id @default(uuid())
+  rfqId     Int
+  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  value     String
+  sortOrder Int
+
+  @@index([rfqId])
+  @@map("RfqRequirement")
+}
+
+model RfqSupplier {
+  id        String @id @default(uuid())
+  rfqId     Int
+  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  email     String
+  sortOrder Int
+
+  @@index([rfqId])
+  @@map("RfqSupplier")
+}
+
+model RfqAttachment {
+  id          String   @id @default(uuid())
+  rfqId       Int
+  rfq         Rfq      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  filename    String
+  key         String
+  contentType String
+  size        Int
+  createdAt   DateTime @default(now())
+
+  @@index([rfqId])
+  @@index([key])
+  @@map("RfqAttachment")
+}
+
+model RateLimit {
+  key       String   @id
+  count     Int
+  lastReset DateTime
+
+  @@map("RateLimit")
+}
