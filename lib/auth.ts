@@ -17,8 +17,7 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
-    // Using the correct option for token expiration
+    requireEmailVerification: false,
     resetPasswordTokenExpiresIn: PASSWORD_RESET_TOKEN_EXPIRES_IN,
   },
   user: {

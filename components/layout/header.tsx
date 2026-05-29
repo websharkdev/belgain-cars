@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { Search, ShoppingBag, User } from 'lucide-react';
+import { Search, ShoppingBag } from 'lucide-react';
 import { CartSheet } from '@/components/layout/cart/cart-sheet';
 import { CatalogMenu } from '@/components/layout/catalog/catalog-menu';
+import { HeaderUserMenu } from '@/components/layout/header-user-menu';
 import { Logo } from '@/components/layout/logo';
 import { pageContainerClassName } from '@/components/layout/page-container';
 import { PageOverlay } from '@/components/layout/page-overlay';
@@ -15,7 +16,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from '@/components/ui/input-group';
-import { headerSearchPlaceholder, headerSignInHref } from '@/data/header';
+import { headerSearchPlaceholder } from '@/data/header';
 import { Link, useRouter } from '@/i18n/routing';
 import { headerSearchSchema } from '@/schemas/search.schema';
 import { getCartSummary, useCartStore } from '@/store/use-cart-store';
@@ -122,24 +123,6 @@ function HeaderSearch({ open, onOpenChange }: HeaderSearchProps) {
   );
 }
 
-function SignInButton() {
-  return (
-    <Button
-      asChild
-      variant="pillMuted"
-      className="px-5"
-      aria-label="Sign in to your account"
-    >
-      <Link href={headerSignInHref}>
-        <User className="text-ink size-5" />
-        <span className="text-ink pb-px text-sm leading-5 font-normal">
-          Sign In
-        </span>
-      </Link>
-    </Button>
-  );
-}
-
 function CartButton() {
   const items = useCartStore((state) => state.items);
   const cart = getCartSummary(items);
@@ -171,7 +154,7 @@ function CartButton() {
 function HeaderActions() {
   return (
     <div className="flex shrink-0 items-center gap-3">
-      <SignInButton />
+      <HeaderUserMenu />
       <CartButton />
     </div>
   );

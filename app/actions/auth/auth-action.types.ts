@@ -16,5 +16,10 @@ export interface SignInValues {
     password?: string;
 }
 
-export const normalizeAuthRole = (role?: string | null) =>
-    role === "supplier" ? "supplier" : "buyer";
+export type AuthRole = "buyer" | "supplier";
+
+export const normalizeAuthRole = (role?: string | null): AuthRole =>
+    role === "supplier" || role === "business" ? "supplier" : "buyer";
+
+export const getAuthRoleLabel = (role?: string | null) =>
+    normalizeAuthRole(role) === "supplier" ? "Business" : "Person";

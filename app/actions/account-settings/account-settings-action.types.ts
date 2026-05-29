@@ -21,6 +21,7 @@ export interface EncodedChangePasswordValues
     newPassword?: string;
 }
 
-export interface EncodedDeleteAccountValues extends Omit<DeleteAccountValues, "password"> {
+export interface EncodedDeleteAccountValues extends Omit<DeleteAccountValues, "confirmation" | "password"> {
+    confirmation?: string;
     password?: string;
 }

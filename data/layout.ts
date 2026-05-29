@@ -1,6 +1,11 @@
+import { routes } from '@/lib/routes';
 import type { ComponentType } from 'react';
 import { Mail } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, TikTokIcon } from '@/components/icons/social-icons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TikTokIcon,
+} from '@/components/icons/social-icons';
 
 export interface NavLinkData {
   label: string;
@@ -63,14 +68,17 @@ export const newsletterCta = {
 export const footerColumns: FooterColumnData[] = [
   {
     title: 'Catalog',
-    links: catalogLabels.map((label) => ({ label, href: toCatalogHref(label) })),
+    links: catalogLabels.map((label) => ({
+      label,
+      href: toCatalogHref(label),
+    })),
   },
   {
     title: 'For Clients',
     links: [
       { label: 'Delivery & Payment', href: '/delivery-payment' },
       { label: 'Warranty and Returns', href: '/warranty-returns' },
-      { label: 'Order History', href: '/order-history' },
+      { label: 'Order History', href: routes.orderHistory },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Conditions', href: '/terms' },
     ],

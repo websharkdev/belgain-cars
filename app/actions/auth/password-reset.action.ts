@@ -9,6 +9,7 @@ import { decodePasswordFromAction } from '@/lib/password.lib';
 import prisma from '@/lib/prisma';
 import { checkRateLimit } from '@/lib/rate-limit';
 import { logger } from '@/lib/logger';
+import { routes } from '@/lib/routes';
 import {
   forgotPasswordActionSchema,
   resetPasswordActionSchema,
@@ -20,7 +21,9 @@ export const forgotPasswordAction = async (email: string) => {
   const parsed = forgotPasswordActionSchema.safeParse({ email });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? 'Invalid email address.' };
+    return {
+      error: parsed.error.issues[0]?.message ?? 'Invalid email address.',
+    };
   }
 
   const limit = await checkRateLimit({
@@ -38,7 +41,7 @@ export const forgotPasswordAction = async (email: string) => {
 
   try {
     await auth.api.requestPasswordReset({
-      body: { email: parsed.data.email, redirectTo: '/auth/reset-password' },
+      body: { email: parsed.data.email, redirectTo: routes.resetPassword },
     });
     return { success: true };
   } catch (error: unknown) {

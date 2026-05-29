@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { Minus, Plus, ShoppingCart, Trash2, X } from 'lucide-react';
+import { ShoppingCart, Trash2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -12,6 +12,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { SignInModalForm } from '@/features/auth/sign-in-modal.form';
+import { CART_FIRST_ORDER_CREDIT_LIMIT_CENTS } from '@/features/cart/cart.constants';
+import { CartTotalRow } from '@/features/cart/components/cart-total-row';
+import { CheckoutButton } from '@/features/cart/components/checkout-button';
+import { CreditLimitNotice } from '@/features/cart/components/credit-limit-notice';
+import { QuantityControl } from '@/features/cart/components/quantity-control';
+import { useCheckoutGuard } from '@/features/cart/hooks/use-checkout-guard';
+import { useRouter } from '@/i18n/routing';
+import { routes } from '@/lib/routes';
 import type {
   CartItem,
   CartItemId,
@@ -49,44 +58,6 @@ function EmptyCartState() {
           </Button>
         </SheetClose>
       </div>
-    </div>
-  );
-}
-
-function QuantityControl({
-  quantity,
-  onDecrease,
-  onIncrease,
-}: {
-  quantity: number;
-  onDecrease: () => void;
-  onIncrease: () => void;
-}) {
-  return (
-    <div className="flex items-center gap-4">
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-xs"
-        aria-label="Decrease quantity"
-        className="text-ink-40 hover:text-ink size-4 rounded-none hover:bg-transparent"
-        onClick={onDecrease}
-      >
-        <Minus className="size-4" strokeWidth={2} />
-      </Button>
-      <span className="text-ink w-1.5 text-center text-base leading-6 font-medium">
-        {quantity}
-      </span>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-xs"
-        aria-label="Increase quantity"
-        className="text-ink size-4 rounded-none hover:bg-transparent"
-        onClick={onIncrease}
-      >
-        <Plus className="size-4" strokeWidth={2} />
-      </Button>
     </div>
   );
 }
@@ -165,20 +136,6 @@ function CartItemRow({
   );
 }
 
-function CreditLimitNotice() {
-  return (
-    <div className="border-warning/10 bg-warning/5 rounded-2xl border px-5 py-3 text-sm leading-5">
-      <span className="text-warning font-normal">Credit limit exceeded:</span>
-      <br />
-      <span className="text-ink-70">
-        For your first order, your credit{' '}
-        <span className="text-warning font-medium">limit is $1000</span>. This
-        order is a bit over - add a partial payment to complete your purchase.
-      </span>
-    </div>
-  );
-}
-
 function CartItemsState({
   items,
   summary,
@@ -189,7 +146,14 @@ function CartItemsState({
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
   const increaseQuantity = useCartStore((state) => state.increaseQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
-  const isCreditLimitExceeded = summary.totalCents > 100000;
+  const [authOpen, setAuthOpen] = React.useState(false);
+  const router = useRouter();
+  const { isCheckingSession, requestCheckout } = useCheckoutGuard({
+    onAuthRequired: () => setAuthOpen(true),
+  });
+  const isCreditLimitExceeded =
+    summary.totalCents > CART_FIRST_ORDER_CREDIT_LIMIT_CENTS;
+  const canCheckout = !isCreditLimitExceeded && !isCheckingSession;
 
   return (
     <>
@@ -211,26 +175,19 @@ function CartItemsState({
       </div>
 
       <div className="flex flex-col gap-4 p-6">
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-ink text-base leading-6 font-normal">
-            Total
-          </span>
-          <span className="text-ink text-right text-base leading-6 font-semibold">
-            {summary.total}
-          </span>
-        </div>
-        <Button
-          type="button"
-          disabled={isCreditLimitExceeded}
-          className={cn(
-            'h-12 w-full rounded-full text-base leading-6 font-medium disabled:opacity-100',
-            isCreditLimitExceeded
-              ? 'from-primary/10 to-danger/10 text-ink/40 bg-linear-67 to-70%'
-              : 'from-primary to-danger bg-linear-67 to-90% text-white hover:opacity-95',
-          )}
-        >
-          Go to Checkout
-        </Button>
+        <CartTotalRow total={summary.total} />
+        <CheckoutButton
+          disabled={!canCheckout}
+          isCheckingSession={isCheckingSession}
+          isCreditLimitExceeded={isCreditLimitExceeded}
+          onClick={requestCheckout}
+        />
+        <SignInModalForm
+          open={authOpen}
+          onOpenChange={setAuthOpen}
+          onSuccess={() => router.push(routes.checkout)}
+          trigger={null}
+        />
       </div>
     </>
   );

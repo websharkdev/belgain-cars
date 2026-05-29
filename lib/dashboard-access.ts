@@ -1,13 +1,13 @@
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { auth } from '@/lib/auth';
+import { getServerSession, requireSession } from '@/lib/auth-session';
 import prisma from '@/lib/prisma';
+import { routes } from '@/lib/routes';
 
 export type DashboardRole = 'admin' | 'user';
 
 const ROLE_DASHBOARD_PATH: Record<DashboardRole, string> = {
-  admin: '/dashboard/admin',
-  user: '/dashboard/user',
+  admin: routes.dashboardAdmin,
+  user: routes.dashboardUser,
 };
 
 function normalizeRole(role?: string | null): DashboardRole | null {
@@ -19,9 +19,7 @@ function normalizeRole(role?: string | null): DashboardRole | null {
 }
 
 async function getCurrentRole() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getServerSession();
 
   if (!session) {
     return null;
@@ -47,7 +45,7 @@ export async function redirectToRoleDashboard() {
   const role = await getCurrentRole();
 
   if (!role) {
-    redirect('/auth/sign-in');
+    redirect(routes.signIn);
   }
 
   redirect(ROLE_DASHBOARD_PATH[role]);
@@ -57,20 +55,14 @@ export async function assertDashboardAccess() {
   const role = await getCurrentRole();
 
   if (!role) {
-    redirect('/auth/sign-in');
+    redirect(routes.signIn);
   }
 
   return role;
 }
 
 export async function getDashboardSessionUser() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    redirect('/auth/sign-in');
-  }
+  const session = await requireSession();
 
   const users = await prisma.$queryRaw<
     Array<{
@@ -95,7 +87,7 @@ export async function assertRoleDashboardAccess(expectedRole: DashboardRole) {
   const role = await getCurrentRole();
 
   if (!role) {
-    redirect('/auth/sign-in');
+    redirect(routes.signIn);
   }
 
   if (role !== expectedRole) {

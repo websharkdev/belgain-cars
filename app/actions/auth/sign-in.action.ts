@@ -9,10 +9,7 @@ import { signInActionSchema } from '@/schemas/auth.schema';
 
 import { normalizeAuthRole, type SignInValues } from './auth-action.types';
 
-export const signInAction = async (
-  values: SignInValues,
-  expectedRole: string,
-) => {
+export const signInAction = async (values: SignInValues) => {
   try {
     const parsed = signInActionSchema.safeParse(values);
 
@@ -22,7 +19,6 @@ export const signInAction = async (
 
     const plainPassword = decodePasswordFromAction(parsed.data.password);
     const email = parsed.data.email.toLowerCase();
-    const normalizedExpectedRole = normalizeAuthRole(expectedRole);
     const limit = await checkRateLimit({
       key: 'login',
       windowInSeconds: 1000,
@@ -43,13 +39,6 @@ export const signInAction = async (
     }
 
     const userRole = normalizeAuthRole(user.role);
-
-    if (userRole !== normalizedExpectedRole) {
-      return {
-        error:
-          "The selected role doesn't match this account. Switch tabs and try again.",
-      };
-    }
 
     const result = await auth.api.signInEmail({
       body: { email, password: plainPassword },

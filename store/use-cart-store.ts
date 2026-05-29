@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { formatMoney } from '@/lib/money';
 import type {
   CartItem,
   CartItemId,
@@ -37,11 +38,7 @@ const initialCartItems: CartItem[] = [
   },
 ];
 
-export const formatCartPrice = (cents: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(cents / 100);
+export const formatCartPrice = formatMoney;
 
 export const getCartSummary = (items: CartItem[]): CartSummary => {
   const itemsCount = items.length;

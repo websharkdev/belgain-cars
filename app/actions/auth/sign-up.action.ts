@@ -1,14 +1,20 @@
 'use server';
 
-import { DUPLICATE_EMAIL_ERROR } from '@/features/auth/auth.constants';
+import {
+  AUTH_PASSWORD_MIN_LENGTH,
+  DUPLICATE_EMAIL_ERROR,
+} from '@/features/auth/auth.constants';
 import { auth } from '@/lib/auth';
 import { decodePasswordFromAction } from '@/lib/password.lib';
 import prisma from '@/lib/prisma';
 import { logger } from '@/lib/logger';
-import { createVerificationToken } from '@/lib/verification-token';
 import { signUpActionSchema } from '@/schemas/auth.schema';
 
-import { normalizeAuthRole, type SignUpValues } from './auth-action.types';
+import {
+  getAuthRoleLabel,
+  normalizeAuthRole,
+  type SignUpValues,
+} from './auth-action.types';
 
 export const signUpAction = async (values: SignUpValues, role: string) => {
   try {
@@ -19,18 +25,35 @@ export const signUpAction = async (values: SignUpValues, role: string) => {
     }
 
     const plainPassword = decodePasswordFromAction(parsed.data.password);
+
+    if (plainPassword.length < AUTH_PASSWORD_MIN_LENGTH) {
+      return {
+        error: `Password must be at least ${AUTH_PASSWORD_MIN_LENGTH} characters long.`,
+        field: 'password' as const,
+      };
+    }
+
     const email = parsed.data.email.toLowerCase();
     const normalizedRole = normalizeAuthRole(role);
     const existingUser = await prisma.user.findFirst({
       where: { email: { equals: email, mode: 'insensitive' } },
-      select: { id: true },
+      select: { role: true },
     });
 
     if (existingUser) {
+      const existingRole = normalizeAuthRole(existingUser.role);
+
+      if (existingRole !== normalizedRole) {
+        return {
+          error: `This email is already registered as ${getAuthRoleLabel(existingRole)}. Sign in with that account instead.`,
+          field: 'email' as const,
+        };
+      }
+
       return { error: DUPLICATE_EMAIL_ERROR, field: 'email' as const };
     }
 
-    await auth.api.signUpEmail({
+    const result = await auth.api.signUpEmail({
       body: {
         name: parsed.data.firstName,
         lastName: parsed.data.lastName,
@@ -43,7 +66,10 @@ export const signUpAction = async (values: SignUpValues, role: string) => {
 
     return {
       success: true,
-      verificationToken: createVerificationToken(email, normalizedRole),
+      data: {
+        ...result,
+        user: { ...result.user, role: normalizedRole },
+      },
     };
   } catch (error: unknown) {
     const message =
