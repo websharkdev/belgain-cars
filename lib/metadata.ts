@@ -5,7 +5,7 @@ export const siteConfig = {
     url:
         process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000'
-            : 'https://supplier-portal-mocha.vercel.app',
+            : 'https://belgian-cars.vercel.app',
     ogImage: '/cover.webp',
     description: '',
 };

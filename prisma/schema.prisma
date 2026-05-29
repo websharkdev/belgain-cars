@@ -14,14 +14,13 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  role          String?   @default("buyer")
+  role          String?   @default("user")
   lastName      String
   companyName   String?
   phone         String?
 
   sessions Session[]
   accounts Account[]
-  rfqs     Rfq[]
 
   @@unique([email])
   @@map("User")
@@ -72,93 +71,6 @@ model Verification {
 
   @@index([identifier])
   @@map("Verification")
-}
-
-model Rfq {
-  id            Int       @id @default(autoincrement())
-  title         String
-  description   String
-  budget        Int
-  budgetVisible Boolean
-  deadline      DateTime
-  status        String
-  buyerId       String
-  storagePrefix String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  buyer        User             @relation(fields: [buyerId], references: [id], onDelete: Cascade)
-  lineItems    RfqLineItem[]
-  questions    RfqQuestion[]
-  requirements RfqRequirement[]
-  suppliers    RfqSupplier[]
-  attachments  RfqAttachment[]
-
-  @@index([buyerId])
-  @@map("Rfq")
-}
-
-model RfqLineItem {
-  id             String @id @default(uuid())
-  rfqId          Int
-  rfq            Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  item           String
-  specifications String
-  quantity       Int
-  price          Int
-  total          Int
-  sortOrder      Int
-
-  @@index([rfqId])
-  @@map("RfqLineItem")
-}
-
-model RfqQuestion {
-  id        String @id @default(uuid())
-  rfqId     Int
-  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  value     String
-  sortOrder Int
-
-  @@index([rfqId])
-  @@map("RfqQuestion")
-}
-
-model RfqRequirement {
-  id        String @id @default(uuid())
-  rfqId     Int
-  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  value     String
-  sortOrder Int
-
-  @@index([rfqId])
-  @@map("RfqRequirement")
-}
-
-model RfqSupplier {
-  id        String @id @default(uuid())
-  rfqId     Int
-  rfq       Rfq    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  email     String
-  sortOrder Int
-
-  @@index([rfqId])
-  @@map("RfqSupplier")
-}
-
-model RfqAttachment {
-  id          String   @id @default(uuid())
-  rfqId       Int
-  rfq         Rfq      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  filename    String
-  key         String
-  contentType String
-  size        Int
-  createdAt   DateTime @default(now())
-
-  @@index([rfqId])
-  @@index([key])
-  @@map("RfqAttachment")
 }
 
 model RateLimit {

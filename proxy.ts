@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { getSessionCookie } from 'better-auth/cookies';
 import { routing } from '@/i18n/routing';
+import { routes } from '@/lib/routes';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -62,7 +63,7 @@ export function proxy(request: NextRequest) {
 
   if (!sessionToken && !isPublicPage) {
     const url = request.nextUrl.clone();
-    url.pathname = '/auth/sign-in';
+    url.pathname = routes.signIn;
     return NextResponse.redirect(url);
   }
 

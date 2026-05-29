@@ -6,7 +6,7 @@ export interface User {
     lastName: string;
     email: string;
     token: string;
-    role: 'buyer' | 'supplier';
+    role: 'user' | 'admin';
 }
 
 interface UserStore {

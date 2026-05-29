@@ -1,11 +1,14 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
-import { profileDetailsSchema, type ProfileDetailsValues } from '@/features/dashboard/profile/profile.schema';
-import { auth } from '@/lib/auth';
+import {
+  profileDetailsSchema,
+  type ProfileDetailsValues,
+} from '@/features/dashboard/profile/profile.schema';
+import { getServerSession } from '@/lib/auth-session';
 import prisma from '@/lib/prisma';
 import { checkRateLimit } from '@/lib/rate-limit';
+import { routes } from '@/lib/routes';
 
 import { type ActionResult } from './account-settings-action.types';
 
@@ -31,11 +34,12 @@ export const updateProfileAction = async (
   }
 
   try {
-    const headerList = await headers();
-    const session = await auth.api.getSession({ headers: headerList });
+    const session = await getServerSession();
 
     if (!session) {
-      return { error: 'You need to sign in again before updating your profile.' };
+      return {
+        error: 'You need to sign in again before updating your profile.',
+      };
     }
 
     const email = parsed.data.email.toLowerCase();
@@ -61,7 +65,7 @@ export const updateProfileAction = async (
       },
     });
 
-    revalidatePath('/dashboard');
+    revalidatePath(routes.dashboard);
 
     return { success: true };
   } catch (error: unknown) {

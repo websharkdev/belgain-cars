@@ -148,7 +148,7 @@ export function SignInModalForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const role = accountType === 'business' ? 'supplier' : 'buyer';
+    const role = 'user';
     const rawValues = {
       firstName: String(formData.get('firstName') ?? ''),
       lastName: String(formData.get('lastName') ?? ''),

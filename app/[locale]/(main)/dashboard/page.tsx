@@ -1,19 +1,15 @@
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ProfileForm } from '@/features/dashboard/profile/profile.form';
-import { auth } from '@/lib/auth';
+import { requireUser } from '@/lib/auth-session';
 import prisma from '@/lib/prisma';
+import { routes } from '@/lib/routes';
 import { getUserDisplayName } from '@/lib/string.lib';
 
 export default async function DashboardProfilePage() {
-  const session = await auth.api.getSession({ headers: await headers() });
-
-  if (!session) {
-    redirect('/auth/sign-in');
-  }
+  const user = await requireUser();
 
   const dbUser = await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: user.id },
     select: {
       email: true,
       lastName: true,
@@ -23,7 +19,7 @@ export default async function DashboardProfilePage() {
   });
 
   if (!dbUser) {
-    redirect('/auth/sign-in');
+    redirect(routes.signIn);
   }
 
   const display = getUserDisplayName({
