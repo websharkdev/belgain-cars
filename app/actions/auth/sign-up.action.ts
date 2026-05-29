@@ -21,7 +21,9 @@ export const signUpAction = async (values: SignUpValues, role: string) => {
     const parsed = signUpActionSchema.safeParse(values);
 
     if (!parsed.success) {
-      return { error: parsed.error.issues[0]?.message ?? 'Invalid sign up details.' };
+      return {
+        error: parsed.error.issues[0]?.message ?? 'Invalid sign up details.',
+      };
     }
 
     const plainPassword = decodePasswordFromAction(parsed.data.password);

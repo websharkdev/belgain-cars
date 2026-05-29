@@ -28,7 +28,7 @@ function PageOverlay({ open, onClose, className }: PageOverlayProps) {
       type="button"
       aria-label="Close menu"
       className={cn(
-        'fixed inset-0 z-40 border-0 bg-ink/40 p-0',
+        'bg-ink/40 fixed inset-0 z-40 border-0 p-0',
         'cursor-default transition-opacity',
         className,
       )}

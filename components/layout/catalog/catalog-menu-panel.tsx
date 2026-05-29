@@ -10,8 +10,12 @@ import { Separator } from '@/components/ui/separator';
 import { CATALOG_CATEGORIES } from '@/data/catalog';
 
 function CatalogMenuPanel() {
-  const [activeCategoryId, setActiveCategoryId] = React.useState<string | null>(null);
-  const [activeSubcategoryId, setActiveSubcategoryId] = React.useState<string | null>(null);
+  const [activeCategoryId, setActiveCategoryId] = React.useState<string | null>(
+    null,
+  );
+  const [activeSubcategoryId, setActiveSubcategoryId] = React.useState<
+    string | null
+  >(null);
 
   const activeCategory = activeCategoryId
     ? CATALOG_CATEGORIES.find((category) => category.id === activeCategoryId)
@@ -30,7 +34,7 @@ function CatalogMenuPanel() {
   };
 
   return (
-    <div className="flex w-full min-w-0 items-start overflow-hidden rounded-b-3xl bg-popover">
+    <div className="bg-popover flex w-full min-w-0 items-start overflow-hidden rounded-b-3xl">
       <ScrollArea className="h-120 w-96 shrink-0">
         <div className="flex flex-col gap-0.5 p-3">
           {CATALOG_CATEGORIES.map((category) => (
@@ -59,7 +63,9 @@ function CatalogMenuPanel() {
             ))}
           </div>
         ) : (
-          <CatalogEmptyState>Hover a catalog category to preview subcategories.</CatalogEmptyState>
+          <CatalogEmptyState>
+            Hover a catalog category to preview subcategories.
+          </CatalogEmptyState>
         )}
       </ScrollArea>
 

@@ -21,7 +21,13 @@ function FooterLink({ link }: { link: NavLinkData }) {
   );
 }
 
-function FooterColumn({ title, links }: { title: string; links: NavLinkData[] }) {
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: NavLinkData[];
+}) {
   return (
     <div className="flex min-w-0 flex-col items-start gap-3">
       <h4 className="text-sm leading-5 font-medium text-white">{title}</h4>
@@ -46,7 +52,12 @@ function ContactBlock({ contact }: { contact: ContactLinkData }) {
         {contact.label}
       </span>
       {contact.href ? (
-        <Button asChild variant="linkInverseStrong" size="auto" className={valueClassName}>
+        <Button
+          asChild
+          variant="linkInverseStrong"
+          size="auto"
+          className={valueClassName}
+        >
           <a href={contact.href}>{contact.value}</a>
         </Button>
       ) : (
@@ -94,11 +105,17 @@ export function Footer() {
 
         <div className="grid grid-cols-1 gap-12 pt-10 pb-10.5 sm:grid-cols-2 lg:grid-cols-4">
           {footerColumns.map((column) => (
-            <FooterColumn key={column.title} title={column.title} links={column.links} />
+            <FooterColumn
+              key={column.title}
+              title={column.title}
+              links={column.links}
+            />
           ))}
 
           <div className="flex min-w-0 flex-col items-start gap-3">
-            <h4 className="text-sm leading-5 font-medium text-white">Contacts</h4>
+            <h4 className="text-sm leading-5 font-medium text-white">
+              Contacts
+            </h4>
             <div className="flex flex-col items-start gap-3">
               {footerContacts.map((contact) => (
                 <ContactBlock key={contact.label} contact={contact} />
@@ -110,11 +127,19 @@ export function Footer() {
         <Separator className="bg-white/10" />
 
         <div className="flex flex-col items-start justify-between gap-5 pt-5 text-sm leading-5 text-white/60 sm:flex-row sm:items-center">
-          <span className="line-clamp-1">©BCS AUTOPARTS 2026. All rights reserved.</span>
+          <span className="line-clamp-1">
+            ©BCS AUTOPARTS 2026. All rights reserved.
+          </span>
 
           <div className="flex items-center gap-2">
             {footerSocialLinks.map(({ label, href, icon: Icon }) => (
-              <Button key={label} asChild aria-label={label} size="icon-lg" variant="iconSoftInverse">
+              <Button
+                key={label}
+                asChild
+                aria-label={label}
+                size="icon-lg"
+                variant="iconSoftInverse"
+              >
                 <a href={href}>
                   <Icon className="size-5" />
                 </a>

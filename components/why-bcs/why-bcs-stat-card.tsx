@@ -16,16 +16,16 @@ function WhyBcsStatCard({ stat, className }: WhyBcsStatCardProps) {
   return (
     <Card variant="stat" className={className}>
       <CardHeader className="gap-1.5 px-0">
-        <CardTitle className="text-8 leading-9.5 text-danger font-semibold">
+        <CardTitle className="text-8 text-danger leading-9.5 font-semibold">
           {stat.metric}
         </CardTitle>
-        <CardDescription className="text-base leading-6 text-ink font-medium">
+        <CardDescription className="text-ink text-base leading-6 font-medium">
           {stat.title}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="px-0">
-        <CardDescription className="text-sm leading-5.25 text-ink-40">
+        <CardDescription className="text-ink-40 text-sm leading-5.25">
           {stat.description}
         </CardDescription>
       </CardContent>

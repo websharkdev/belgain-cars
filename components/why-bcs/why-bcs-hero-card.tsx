@@ -18,11 +18,11 @@ function WhyBcsHeroCard({ data, className }: WhyBcsHeroCardProps) {
   return (
     <Card
       className={cn(
-        'h-79 max-w-103 gap-0 rounded-2xl py-0 relative w-full shrink-0 overflow-hidden border-0 ring-0',
+        'relative h-79 w-full max-w-103 shrink-0 gap-0 overflow-hidden rounded-2xl border-0 py-0 ring-0',
         className,
       )}
     >
-      <div className="top-0 right-0 h-79 w-118.5 absolute">
+      <div className="absolute top-0 right-0 h-79 w-118.5">
         <Image
           src={imageSrc}
           alt=""
@@ -32,21 +32,21 @@ function WhyBcsHeroCard({ data, className }: WhyBcsHeroCardProps) {
         />
       </div>
 
-      <p className="left-5 top-4 w-87.5 text-8 leading-9.5 absolute z-10 font-semibold text-white">
+      <p className="text-8 absolute top-4 left-5 z-10 w-87.5 leading-9.5 font-semibold text-white">
         {data.metric}
       </p>
 
-      <p className="left-5 top-15 w-87.5 text-base leading-6 absolute z-10 font-medium text-white">
+      <p className="absolute top-15 left-5 z-10 w-87.5 text-base leading-6 font-medium text-white">
         {data.subtitle}
       </p>
 
-      <p className="left-5 top-22.5 w-87.5 text-sm leading-5.25 absolute z-10 text-white/80">
+      <p className="absolute top-22.5 left-5 z-10 w-87.5 text-sm leading-5.25 text-white/80">
         {data.description}
       </p>
 
       <Button
         variant="pillSurface"
-        className="left-5 top-63.5 h-10.5 w-27.25 px-5 py-2.75 text-sm leading-5 absolute z-10 font-medium"
+        className="absolute top-63.5 left-5 z-10 h-10.5 w-27.25 px-5 py-2.75 text-sm leading-5 font-medium"
       >
         {data.buttonLabel ?? 'Shop Now'}
       </Button>

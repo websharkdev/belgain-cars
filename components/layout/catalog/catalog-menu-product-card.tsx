@@ -14,12 +14,12 @@ function CatalogMenuProductCard({ product }: CatalogMenuProductCardProps) {
       variant="outline"
       size="sm"
       asChild
-      className="h-auto w-64 gap-2.5 rounded-lg border-ink/5 p-3 transition-all duration-200 ease-out hover:border-primary/20 hover:shadow-xs"
+      className="border-ink/5 hover:border-primary/20 h-auto w-64 gap-2.5 rounded-lg p-3 transition-all duration-200 ease-out hover:shadow-xs"
     >
       <Link href={product.href}>
         <ItemMedia
           variant="image"
-          className="size-9 rounded-none bg-muted/50 transition-transform duration-200 ease-out group-hover/item:scale-105"
+          className="bg-muted/50 size-9 rounded-none transition-transform duration-200 ease-out group-hover/item:scale-105"
         >
           {product.image ? (
             <Image
@@ -31,10 +31,10 @@ function CatalogMenuProductCard({ product }: CatalogMenuProductCardProps) {
               className="size-9 object-contain"
             />
           ) : (
-            <Package className="size-5 text-ink/30" strokeWidth={1.5} />
+            <Package className="text-ink/30 size-5" strokeWidth={1.5} />
           )}
         </ItemMedia>
-        <ItemTitle className="text-base leading-6 text-ink font-medium">
+        <ItemTitle className="text-ink text-base leading-6 font-medium">
           {product.name}
         </ItemTitle>
       </Link>

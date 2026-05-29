@@ -14,7 +14,9 @@ export const signInAction = async (values: SignInValues) => {
     const parsed = signInActionSchema.safeParse(values);
 
     if (!parsed.success) {
-      return { error: parsed.error.issues[0]?.message ?? 'Invalid sign in details.' };
+      return {
+        error: parsed.error.issues[0]?.message ?? 'Invalid sign in details.',
+      };
     }
 
     const plainPassword = decodePasswordFromAction(parsed.data.password);

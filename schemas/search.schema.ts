@@ -6,7 +6,10 @@ export const headerSearchSchema = z.object({
     .trim()
     .min(2, 'Enter at least 2 characters.')
     .max(80, 'Search query is too long.')
-    .regex(/^[\p{L}\p{N}\s._/\-]+$/u, 'Search contains unsupported characters.'),
+    .regex(
+      /^[\p{L}\p{N}\s._/\-]+$/u,
+      'Search contains unsupported characters.',
+    ),
 });
 
 export const vinSearchSchema = z.object({

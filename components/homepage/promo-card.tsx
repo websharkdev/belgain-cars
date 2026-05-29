@@ -17,7 +17,7 @@ function PromoBadge({ children }: { children: string }) {
     <Button
       variant="secondary"
       size="xs"
-      className="relative z-10 h-6.5 w-fit rounded-full px-2.75 text-xs font-medium text-danger"
+      className="text-danger relative z-10 h-6.5 w-fit rounded-full px-2.75 text-xs font-medium"
     >
       {children}
     </Button>
@@ -27,10 +27,10 @@ function PromoBadge({ children }: { children: string }) {
 function PromoContent({ promo }: { promo: PromoCardData }) {
   return (
     <CardContent className="relative z-10 px-5.5 pt-0">
-      <CardTitle className="max-w-66 text-7 font-medium leading-8.5 text-ink">
+      <CardTitle className="text-7 text-ink max-w-66 leading-8.5 font-medium">
         {promo.title}
       </CardTitle>
-      <CardDescription className="text-base text-ink-60">
+      <CardDescription className="text-ink-60 text-base">
         {promo.subtitle}
       </CardDescription>
     </CardContent>
@@ -46,7 +46,7 @@ function PromoImage({ promo }: { promo: PromoCardData }) {
       height={320}
       loading="eager"
       sizes="(min-width: 1280px) 25vw, 100vw"
-      className="pointer-events-none absolute bottom-0 right-0 z-0 h-auto w-[95%] object-contain object-bottom-right mix-blend-darken"
+      className="pointer-events-none absolute right-0 bottom-0 z-0 h-auto w-[95%] object-contain object-bottom-right mix-blend-darken"
     />
   );
 }
@@ -63,7 +63,10 @@ export function PromoCard() {
       <PromoContent promo={oilPromo} />
 
       <CardFooter className="relative z-10 mt-auto border-0 bg-transparent px-6 pb-6">
-        <Button variant="pillDanger" className="h-10.5 px-5 text-sm font-medium">
+        <Button
+          variant="pillDanger"
+          className="h-10.5 px-5 text-sm font-medium"
+        >
           {oilPromo.ctaLabel}
         </Button>
       </CardFooter>

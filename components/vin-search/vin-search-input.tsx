@@ -26,13 +26,13 @@ function VinSearchInput({
   return (
     <InputGroup
       className={cn(
-        'h-12 bg-muted px-1 rounded-full border-0 shadow-none ring-0',
+        'bg-muted h-12 rounded-full border-0 px-1 shadow-none ring-0',
         'has-[[data-slot=input-group-control]:focus-visible]:border-transparent has-[[data-slot=input-group-control]:focus-visible]:ring-0',
         className,
       )}
     >
       <InputGroupAddon align="inline-start" className="pl-1">
-        <div className="size-10 border-ink-08 p-1 flex items-center justify-center rounded-full border border-dashed">
+        <div className="border-ink-08 flex size-10 items-center justify-center rounded-full border border-dashed p-1">
           <BelgianFlagIcon />
         </div>
       </InputGroupAddon>

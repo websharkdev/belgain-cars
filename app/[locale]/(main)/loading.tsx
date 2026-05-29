@@ -23,7 +23,7 @@ function SkeletonPanel({
   className?: string;
 }) {
   return (
-    <Skeleton className={cn('rounded-2xl bg-muted', className)}>
+    <Skeleton className={cn('bg-muted rounded-2xl', className)}>
       {children}
     </Skeleton>
   );
@@ -31,41 +31,41 @@ function SkeletonPanel({
 
 function HeroSearchSkeleton() {
   return (
-    <section className="gap-5 flex w-full flex-col items-start xl:flex-row">
-      <div className="min-w-0 gap-5 xl:w-75.5 flex w-full flex-col xl:shrink-0">
-        <div className="h-12 gap-1 bg-muted p-1 flex items-center rounded-full">
-          <SkeletonPill className="h-10 flex-1 bg-card" />
+    <section className="flex w-full flex-col items-start gap-5 xl:flex-row">
+      <div className="flex w-full min-w-0 flex-col gap-5 xl:w-75.5 xl:shrink-0">
+        <div className="bg-muted flex h-12 items-center gap-1 rounded-full p-1">
+          <SkeletonPill className="bg-card h-10 flex-1" />
           <SkeletonPill className="h-10 flex-1 bg-transparent" />
         </div>
 
-        <div className="h-97 relative flex flex-col justify-between">
+        <div className="relative flex h-97 flex-col justify-between">
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="relative">
               {index > 0 ? (
                 <span
                   aria-hidden="true"
-                  className="-top-5 left-6 h-5 w-px bg-ink-05 absolute"
+                  className="bg-ink-05 absolute -top-5 left-6 h-5 w-px"
                 />
               ) : null}
-              <SkeletonPill className="h-12 bg-muted w-full" />
+              <SkeletonPill className="bg-muted h-12 w-full" />
             </div>
           ))}
         </div>
       </div>
 
-      <SkeletonPanel className="min-h-114 rounded-3xl min-w-0 w-full flex-1" />
-      <SkeletonPanel className="h-114 rounded-3xl xl:w-72 hidden w-full xl:block xl:shrink-0" />
+      <SkeletonPanel className="min-h-114 w-full min-w-0 flex-1 rounded-3xl" />
+      <SkeletonPanel className="hidden h-114 w-full rounded-3xl xl:block xl:w-72 xl:shrink-0" />
     </section>
   );
 }
 
 function NewArrivalsSkeleton() {
   return (
-    <section className="gap-5 flex w-full flex-col">
+    <section className="flex w-full flex-col gap-5">
       <SkeletonPill className="h-7 w-40" />
 
-      <div className="h-12 gap-2 bg-muted p-1 flex items-center overflow-hidden rounded-full">
-        <SkeletonPill className="h-10 w-36 shrink-0 bg-card" />
+      <div className="bg-muted flex h-12 items-center gap-2 overflow-hidden rounded-full p-1">
+        <SkeletonPill className="bg-card h-10 w-36 shrink-0" />
         {NEW_ARRIVAL_TAB_SKELETON_WIDTHS.map((widthClassName, index) => (
           <SkeletonPill
             key={index}
@@ -74,17 +74,17 @@ function NewArrivalsSkeleton() {
         ))}
       </div>
 
-      <div className="gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {Array.from({ length: 5 }).map((_, index) => (
           <SkeletonPanel
             key={index}
-            className="h-87.5 rounded-2xl border-ink-10 bg-ink-05 border"
+            className="border-ink-10 bg-ink-05 h-87.5 rounded-2xl border"
           />
         ))}
       </div>
 
-      <div className="pt-2 flex justify-center">
-        <SkeletonPill className="h-12 w-36 bg-muted" />
+      <div className="flex justify-center pt-2">
+        <SkeletonPill className="bg-muted h-12 w-36" />
       </div>
     </section>
   );
@@ -92,22 +92,22 @@ function NewArrivalsSkeleton() {
 
 function CategoryCardSkeleton() {
   return (
-    <SkeletonPanel className="h-31.75 rounded-2xl relative overflow-visible">
-      <Skeleton className="-top-3 size-20 bg-ink-05 absolute left-1/2 -translate-x-1/2 rounded-none" />
-      <SkeletonPill className="bottom-6.75 h-4 w-36 absolute left-1/2 -translate-x-1/2" />
+    <SkeletonPanel className="relative h-31.75 overflow-visible rounded-2xl">
+      <Skeleton className="bg-ink-05 absolute -top-3 left-1/2 size-20 -translate-x-1/2 rounded-none" />
+      <SkeletonPill className="absolute bottom-6.75 left-1/2 h-4 w-36 -translate-x-1/2" />
     </SkeletonPanel>
   );
 }
 
 function PopularCategoriesSkeleton() {
   return (
-    <section className="gap-9 flex w-full flex-col overflow-hidden">
-      <div className="gap-5 flex items-center justify-between">
+    <section className="flex w-full flex-col gap-9 overflow-hidden">
+      <div className="flex items-center justify-between gap-5">
         <SkeletonPill className="h-7 w-40" />
-        <SkeletonPill className="h-12 w-36 bg-muted" />
+        <SkeletonPill className="bg-muted h-12 w-36" />
       </div>
 
-      <div className="gap-x-5 gap-y-8 grid grid-cols-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <CategoryCardSkeleton key={index} />
         ))}
@@ -118,10 +118,10 @@ function PopularCategoriesSkeleton() {
 
 function ManufacturersSkeleton() {
   return (
-    <section className="gap-6 flex w-full flex-col overflow-hidden">
+    <section className="flex w-full flex-col gap-6 overflow-hidden">
       <SkeletonPill className="h-7 w-96 max-w-full" />
 
-      <div className="gap-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {Array.from({ length: 12 }).map((_, index) => (
           <SkeletonPanel key={index} className="h-28 rounded-2xl" />
         ))}
@@ -132,21 +132,21 @@ function ManufacturersSkeleton() {
 
 function WhyBcsSkeleton() {
   return (
-    <section className="gap-6 pb-2 flex w-full flex-col overflow-hidden">
+    <section className="flex w-full flex-col gap-6 overflow-hidden pb-2">
       <SkeletonPill className="h-7 w-64" />
 
-      <div className="gap-5 flex w-full flex-col lg:flex-row">
-        <SkeletonPanel className="h-79 rounded-2xl lg:w-103 relative overflow-hidden bg-card">
-          <Skeleton className="-left-15.5 h-79 w-118.5 bg-ink-05 absolute top-0 rounded-none" />
-          <SkeletonPill className="left-5 top-4 h-7 w-64 absolute" />
-          <SkeletonPill className="left-5 top-12.5 h-7 w-40 absolute" />
+      <div className="flex w-full flex-col gap-5 lg:flex-row">
+        <SkeletonPanel className="bg-card relative h-79 overflow-hidden rounded-2xl lg:w-103">
+          <Skeleton className="bg-ink-05 absolute top-0 -left-15.5 h-79 w-118.5 rounded-none" />
+          <SkeletonPill className="absolute top-4 left-5 h-7 w-64" />
+          <SkeletonPill className="absolute top-12.5 left-5 h-7 w-40" />
         </SkeletonPanel>
 
-        <div className="min-w-0 gap-5 grid flex-1 grid-cols-1 sm:grid-cols-2">
+        <div className="grid min-w-0 flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, index) => (
             <SkeletonPanel
               key={index}
-              className="h-37 gap-1.5 rounded-2xl px-5 py-4 flex flex-col"
+              className="flex h-37 flex-col gap-1.5 rounded-2xl px-5 py-4"
             >
               <SkeletonPill className="h-7 w-64 max-w-full" />
               <SkeletonPill className="h-7 w-40" />
@@ -162,7 +162,7 @@ export default function Loading() {
   return (
     <div
       aria-label="Loading home page"
-      className="gap-14 px-5 py-14 max-w-319 mx-auto flex w-full flex-col items-stretch overflow-hidden xl:px-0"
+      className="mx-auto flex w-full max-w-319 flex-col items-stretch gap-14 overflow-hidden px-5 py-14 xl:px-0"
     >
       <HeroSearchSkeleton />
       <NewArrivalsSkeleton />

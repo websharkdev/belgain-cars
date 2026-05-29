@@ -18,4 +18,6 @@ export const createDeleteAccountSchema = (email: string) =>
       }),
   });
 
-export type DeleteAccountValues = z.infer<ReturnType<typeof createDeleteAccountSchema>>;
+export type DeleteAccountValues = z.infer<
+  ReturnType<typeof createDeleteAccountSchema>
+>;

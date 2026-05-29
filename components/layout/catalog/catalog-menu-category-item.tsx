@@ -26,9 +26,7 @@ function CatalogMenuCategoryItem({
       onClick={handlePreview}
       onFocus={handlePreview}
       onMouseEnter={handlePreview}
-      className={cn(
-        isActive && 'bg-muted hover:bg-muted',
-      )}
+      className={cn(isActive && 'bg-muted hover:bg-muted')}
     >
       <span className="relative flex size-6 shrink-0 items-center justify-center overflow-hidden transition-transform duration-200 ease-out group-hover/button:scale-105">
         {category.icon ? (
@@ -41,13 +39,16 @@ function CatalogMenuCategoryItem({
             className="size-6 object-contain"
           />
         ) : (
-          <Package className="size-4 text-ink/30" strokeWidth={1.5} />
+          <Package className="text-ink/30 size-4" strokeWidth={1.5} />
         )}
       </span>
-      <span className="line-clamp-1 flex-1 text-left text-base leading-6 text-ink">
+      <span className="text-ink line-clamp-1 flex-1 text-left text-base leading-6">
         {category.name}
       </span>
-      <ChevronRight className="size-4 shrink-0 text-ink/20 transition-transform duration-200 ease-out group-hover/button:translate-x-1" strokeWidth={1.5} />
+      <ChevronRight
+        className="text-ink/20 size-4 shrink-0 transition-transform duration-200 ease-out group-hover/button:translate-x-1"
+        strokeWidth={1.5}
+      />
     </Button>
   );
 }

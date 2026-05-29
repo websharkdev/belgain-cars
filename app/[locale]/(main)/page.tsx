@@ -13,10 +13,10 @@ export default function HomePage() {
     <div
       className={cn(
         pageContainerClassName,
-        'gap-14 py-14 flex flex-col items-stretch',
+        'flex flex-col items-stretch gap-14 py-14',
       )}
     >
-      <div className="gap-5 grid w-full grid-cols-1 items-center xl:grid-cols-12">
+      <div className="grid w-full grid-cols-1 items-center gap-5 xl:grid-cols-12">
         <Filters />
         <HeroSlider />
         <PromoCard />

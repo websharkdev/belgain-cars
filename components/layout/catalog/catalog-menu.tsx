@@ -91,7 +91,7 @@ function CatalogMenu({
               'data-open:opacity-90 data-popup-open:opacity-90',
               'focus:bg-linear-to-br focus:hover:bg-linear-to-br',
             )}
-            icon={<ChevronDown className="flex-1 text-primary" />}
+            icon={<ChevronDown className="text-primary flex-1" />}
           >
             <div className="flex items-center gap-2">
               <CatalogLayoutGridIcon />
@@ -101,7 +101,7 @@ function CatalogMenu({
 
           <NavigationMenuContent
             className={cn(
-              '!absolute top-full right-5 left-5 z-50 !mt-0 !w-auto max-w-none overflow-hidden !rounded-t-none rounded-b-3xl bg-popover p-0 md:right-5 md:left-5 md:!w-auto',
+              'bg-popover !absolute top-full right-5 left-5 z-50 !mt-0 !w-auto max-w-none overflow-hidden !rounded-t-none rounded-b-3xl p-0 md:right-5 md:left-5 md:!w-auto',
               'ring-ink/5 shadow-none ring-1',
               'data-[motion^=from-]:fade-in-0 data-[motion^=to-]:fade-out-0',
             )}

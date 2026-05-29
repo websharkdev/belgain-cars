@@ -36,7 +36,9 @@ export const verifyEmailAction = async (
     }
 
     if (!/^\d{6}$/.test(otp.trim())) {
-      return { error: `Enter the ${DEMO_VERIFICATION_CODE_LENGTH}-digit verification code.` };
+      return {
+        error: `Enter the ${DEMO_VERIFICATION_CODE_LENGTH}-digit verification code.`,
+      };
     }
 
     const user = await prisma.user.update({

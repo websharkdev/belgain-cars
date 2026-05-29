@@ -1,4 +1,11 @@
-export type SearchMatchField = 'VIN' | 'Product №' | 'EAN' | 'OE' | 'Tyre size' | 'Brand' | 'Title';
+export type SearchMatchField =
+  | 'VIN'
+  | 'Product №'
+  | 'EAN'
+  | 'OE'
+  | 'Tyre size'
+  | 'Brand'
+  | 'Title';
 
 export type BatteryArtVariant = 'bosch' | 'exide' | 'topla';
 export type ProductAvailability = 'order' | 'stock';
@@ -24,7 +31,11 @@ export interface SearchSuggestionProduct {
   art: BatteryArtVariant;
 }
 
-export const recentSearches = ['WVWZZZ1JZXW000001', '359526', '215/65R15'] as const;
+export const recentSearches = [
+  'WVWZZZ1JZXW000001',
+  '359526',
+  '215/65R15',
+] as const;
 
 export const popularSearchCategories = [
   'Electrical & Lighting',
@@ -128,7 +139,10 @@ export const mockSearchProducts: SearchSuggestionProduct[] = [
   },
 ];
 
-export function getSearchProductMatches(product: SearchSuggestionProduct, query: string) {
+export function getSearchProductMatches(
+  product: SearchSuggestionProduct,
+  query: string,
+) {
   const normalizedQuery = normalizeSearchValue(query);
   if (!normalizedQuery) return [];
 
@@ -137,23 +151,32 @@ export function getSearchProductMatches(product: SearchSuggestionProduct, query:
     { label: 'EAN', value: product.ean },
     ...product.oe.map((value) => ({ label: 'OE' as const, value })),
     ...product.vin.map((value) => ({ label: 'VIN' as const, value })),
-    ...(product.tyreSize ? [{ label: 'Tyre size' as const, value: product.tyreSize }] : []),
+    ...(product.tyreSize
+      ? [{ label: 'Tyre size' as const, value: product.tyreSize }]
+      : []),
     { label: 'Brand', value: product.brand },
     { label: 'Title', value: product.title },
   ];
 
-  return fields.filter(({ value }) => normalizeSearchValue(value).includes(normalizedQuery));
+  return fields.filter(({ value }) =>
+    normalizeSearchValue(value).includes(normalizedQuery),
+  );
 }
 
 export function searchMockProducts(query: string) {
   const normalizedQuery = normalizeSearchValue(query);
 
   if (normalizedQuery.length < 2) {
-    return mockSearchProducts.slice(0, 3).map((product) => ({ product, matches: [] }));
+    return mockSearchProducts
+      .slice(0, 3)
+      .map((product) => ({ product, matches: [] }));
   }
 
   return mockSearchProducts
-    .map((product) => ({ product, matches: getSearchProductMatches(product, query) }))
+    .map((product) => ({
+      product,
+      matches: getSearchProductMatches(product, query),
+    }))
     .filter(({ matches }) => matches.length > 0)
     .slice(0, 6);
 }

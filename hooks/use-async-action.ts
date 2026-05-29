@@ -15,7 +15,12 @@ export function useAsyncAction<TArgs extends unknown[], TResult = void>(
   const [error, setError] = React.useState<unknown>(null);
 
   const execute = React.useCallback(
-    async (overrideActionOrFirstArg?: ((...args: TArgs) => Promise<TResult>) | TArgs[number], ...restArgs: TArgs) => {
+    async (
+      overrideActionOrFirstArg?:
+        | ((...args: TArgs) => Promise<TResult>)
+        | TArgs[number],
+      ...restArgs: TArgs
+    ) => {
       const actionToRun =
         typeof overrideActionOrFirstArg === 'function'
           ? (overrideActionOrFirstArg as (...args: TArgs) => Promise<TResult>)

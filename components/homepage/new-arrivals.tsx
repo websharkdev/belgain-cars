@@ -15,10 +15,10 @@ function ShowMoreButton() {
   return (
     <Button
       variant="outline"
-      className="h-12 rounded-full border-ink-08 bg-muted pl-5 pr-4 text-base font-medium text-ink hover:bg-ink-06"
+      className="border-ink-08 bg-muted text-ink hover:bg-ink-06 h-12 rounded-full pr-4 pl-5 text-base font-medium"
     >
       Show more
-      <ChevronDown className="size-4.5 text-ink-40" data-icon="inline-end" />
+      <ChevronDown className="text-ink-40 size-4.5" data-icon="inline-end" />
     </Button>
   );
 }
@@ -26,7 +26,10 @@ function ShowMoreButton() {
 export function NewArrivals() {
   const [activeTab, setActiveTab] = React.useState('arrivals');
   const activeProducts = React.useMemo(
-    () => (activeTab === 'arrivals' ? newArrivalProducts : [...newArrivalProducts].reverse()),
+    () =>
+      activeTab === 'arrivals'
+        ? newArrivalProducts
+        : [...newArrivalProducts].reverse(),
     [activeTab],
   );
 
@@ -35,7 +38,10 @@ export function NewArrivals() {
       <SectionHeader title="New Arrivals" />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="gap-5">
-        <NewArrivalsCategoryTabs tabs={newArrivalCategoryTabs} activeTab={activeTab} />
+        <NewArrivalsCategoryTabs
+          tabs={newArrivalCategoryTabs}
+          activeTab={activeTab}
+        />
 
         <div className="relative w-full overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>

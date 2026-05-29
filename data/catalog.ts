@@ -1,4 +1,7 @@
-import type { CatalogCategory, CatalogProduct } from '@/components/layout/catalog/catalog-menu.types';
+import type {
+  CatalogCategory,
+  CatalogProduct,
+} from '@/components/layout/catalog/catalog-menu.types';
 
 const createProducts = (slug: string, names: string[]): CatalogProduct[] =>
   names.map((name) => ({

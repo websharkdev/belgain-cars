@@ -41,7 +41,10 @@ function useDragScroll() {
           event.stopImmediatePropagation();
         };
 
-        element.addEventListener('click', preventClick, { capture: true, once: true });
+        element.addEventListener('click', preventClick, {
+          capture: true,
+          once: true,
+        });
       }
     };
 

@@ -17,7 +17,10 @@ export function TopBar() {
           'flex h-9.75 items-center justify-between gap-7 self-stretch py-2',
         )}
       >
-        <nav aria-label="Secondary" className="flex flex-row items-center gap-6">
+        <nav
+          aria-label="Secondary"
+          className="flex flex-row items-center gap-6"
+        >
           {topBarLinks.map((link) => (
             <Button key={link.label} variant="linkMuted" size="auto" asChild>
               <Link href={link.href ?? '#'}>{link.label}</Link>
@@ -26,14 +29,27 @@ export function TopBar() {
         </nav>
 
         <div className="flex h-full flex-row items-center gap-6">
-          <Button asChild variant="linkMuted" size="auto" className="text-3.75 font-semibold">
+          <Button
+            asChild
+            variant="linkMuted"
+            size="auto"
+            className="text-3.75 font-semibold"
+          >
             <a href={topBarPhone.href}>{topBarPhone.label}</a>
           </Button>
 
-          <Separator orientation="vertical" className="bg-ink-10 h-4 self-center" />
+          <Separator
+            orientation="vertical"
+            className="bg-ink-10 h-4 self-center"
+          />
 
           {topBarLocales.map((locale) => (
-            <Button key={locale} variant="linkMuted" size="auto" className="gap-0.5">
+            <Button
+              key={locale}
+              variant="linkMuted"
+              size="auto"
+              className="gap-0.5"
+            >
               {locale}
               <ChevronDown className="size-3" data-icon="inline-end" />
             </Button>

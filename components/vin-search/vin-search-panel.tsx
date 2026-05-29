@@ -12,7 +12,7 @@ import { vinSearchSchema } from '@/schemas/search.schema';
 
 function VehicleResult({ vehicle }: { vehicle: VehicleLookupResult }) {
   return (
-    <div className="rounded-xl bg-success/10 px-3.5 py-2.5 text-3.25 leading-4.5 text-success w-full text-center">
+    <div className="bg-success/10 text-3.25 text-success w-full rounded-xl px-3.5 py-2.5 text-center leading-4.5">
       {vehicle.year} {vehicle.make} {vehicle.model}
     </div>
   );
@@ -50,9 +50,9 @@ function VinSearchPanel() {
   };
 
   return (
-    <div className="min-h-0 gap-5 flex h-full w-full flex-1 flex-col">
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-5">
       <form
-        className="gap-3 rounded-2xl border-ink-08 p-4 flex flex-col items-center justify-center border"
+        className="border-ink-08 flex flex-col items-center justify-center gap-3 rounded-2xl border p-4"
         onSubmit={handleSubmit}
       >
         <VinSearchInput
@@ -68,7 +68,7 @@ function VinSearchPanel() {
         {error ? (
           <p
             id="vin-search-error"
-            className="text-3.25 leading-4.5 text-danger text-center"
+            className="text-3.25 text-danger text-center leading-4.5"
           >
             {error}
           </p>
@@ -88,7 +88,7 @@ function VinSearchPanel() {
         alt="VIN location guide"
         width={331}
         height={246}
-        className="h-61.5 w-82.75 mx-auto object-contain"
+        className="mx-auto h-61.5 w-82.75 object-contain"
         loading="lazy"
         sizes="(min-width: 1280px) 25vw, 100vw"
       />

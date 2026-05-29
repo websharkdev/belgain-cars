@@ -361,10 +361,13 @@ function SearchSuggestionMenu({
           <div className="flex min-w-0 items-start justify-between gap-4">
             <div className="flex min-w-0 flex-col gap-1">
               <h2 className="text-ink text-xl leading-6 font-medium">
-                {hasQuery ? `Search results for “${query.trim()}”` : 'Popular products'}
+                {hasQuery
+                  ? `Search results for “${query.trim()}”`
+                  : 'Popular products'}
               </h2>
               <p className="text-ink-60 text-sm leading-5">
-                Try VIN, product number, EAN, OE or tyre size. Example: 359526, 4047023479564, TE077, 215/65R15.
+                Try VIN, product number, EAN, OE or tyre size. Example: 359526,
+                4047023479564, TE077, 215/65R15.
               </p>
             </div>
             {hasQuery ? (
@@ -377,19 +380,22 @@ function SearchSuggestionMenu({
           {searchResults.length > 0 ? (
             <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-3">
               {searchResults.map(({ product, matches }) => (
-              <SearchProductCard
-                key={product.id}
-                product={product}
-                matches={matches}
-                onRequestClose={onRequestClose}
-              />
+                <SearchProductCard
+                  key={product.id}
+                  product={product}
+                  matches={matches}
+                  onRequestClose={onRequestClose}
+                />
               ))}
             </div>
           ) : (
             <div className="border-ink-08 bg-muted/50 flex min-h-59.75 flex-col items-center justify-center rounded-2xl border p-8 text-center">
-              <h3 className="text-ink text-lg font-medium">No mock matches yet</h3>
+              <h3 className="text-ink text-lg font-medium">
+                No mock matches yet
+              </h3>
               <p className="text-ink-60 mt-2 max-w-120 text-sm leading-5">
-                This demo searches local mock data by VIN, product number, EAN, OE and tyre size.
+                This demo searches local mock data by VIN, product number, EAN,
+                OE and tyre size.
               </p>
             </div>
           )}
